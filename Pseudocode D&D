@@ -1,0 +1,12 @@
+1. Definieer de kerker_indeling, buit_locaties en schade_locaties.
+2. Definieer start_kamer en eind_kamer.
+3. Initialiseer maximale_buit en beste_route als 0 en een lege lijst.
+4. Initialiseer een wachtrij met een tuple van start_kamer, een lege lijst, 0 en 0.
+5. Terwijl de wachtrij niet leeg is, haal een item uit de wachtrij.
+6. Controleer of de huidige kamer gelijk is aan de eind_kamer.
+    - Als de buit groter is dan maximale_buit en de schade kleiner of gelijk is aan 9, update maximale_buit en beste_route.
+7. Itereer door de verbonden kamers in de kerker_indeling van de huidige kamer.
+    - Bereken de schade en buit voor de volgende kamer.
+    - Voeg de volgende kamer toe aan de route.
+    - Als de resulterende schade kleiner of gelijk is aan 9, voeg het item toe aan de wachtrij.
+8. Print de beste_route, de kamers met maximale buit en de totale schade onderweg.
