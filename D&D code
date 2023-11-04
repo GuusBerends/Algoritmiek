@@ -1,0 +1,63 @@
+from collections import deque
+
+def vind_beste_route():
+    kerker_indeling = {		#Onderlinge verbindingen tussen de kamers
+        1: [2, 5],
+        2: [3],
+        3: [4],
+        4: [6],
+        5: [6],
+        6: [8, 7],
+        7: [11],
+        8: [9],
+        9: [10, 7],
+        10: [],
+        11: [12],
+        12: [],
+    }
+
+    buit_locaties = {2, 3, 4, 5, 7, 8, 9, 10, 11, 12}	#In welke kamers ligt er buit 
+
+    schade_locaties = {	#in welke kamers krijg je schade
+        2: 1,
+        3: 1,
+        4: 1,
+        5: 1,
+        6: 1,
+        7: 1,
+        8: 1,
+        9: 1,
+        10: 1,
+        11: 1,
+        12: 1
+    }
+
+    start_kamer = 1
+    eind_kamer = 12
+
+    maximale_buit = 0
+    beste_route = []
+
+    wachtrij = deque([(start_kamer, [], 0, 0)])
+
+    while wachtrij:
+        kamer, route, schade, buit = wachtrij.popleft()
+        if kamer == eind_kamer:
+            if buit > maximale_buit and schade <= 9:
+                maximale_buit = buit
+                beste_route = route
+            continue
+
+        for volgende_kamer in kerker_indeling[kamer]:
+            volgende_schade = schade + schade_locaties[volgende_kamer]
+            nieuwe_buit = buit + int(volgende_kamer in buit_locaties)
+            nieuwe_route = route + [volgende_kamer]
+            if volgende_schade <= 9:
+                wachtrij.append((volgende_kamer, nieuwe_route, volgende_schade, nieuwe_buit))
+
+    print("Beste route:", beste_route,
+          "\nMaximale buit verzameld in kamers:", [kamer for kamer in beste_route if kamer in buit_locaties],
+          "\nTotale schade onderweg:", sum(schade_locaties[kamer] for kamer in beste_route))
+
+vind_beste_route()
+
